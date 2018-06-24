@@ -1,0 +1,26 @@
+
+Xsquid:S1148o"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿH‡RMINORZVULNERABILITY
+j
+squid:S106#"9Replace this use of System.out or System.err by a logger.(éÜÙÙúÿÿÿÿHˆRMAJORZ
+CODE_SMELL
+e
+squid:S106T"9Replace this use of System.out or System.err by a logger.(ùàèüH‰RMAJORZ
+CODE_SMELL
+q
+squid:S106Z"9Replace this use of System.out or System.err by a logger.(ˆšÑÖüÿÿÿÿ8÷èÎ¤¾,HŠRMAJORZ
+CODE_SMELL
+Fsquid:S1220""Move this file to a named package.HORMINORZ
+CODE_SMELL
+}squid:CommentedOutCodeLine<"<This block of commented-out lines of code should be removed.(’‚ÎºøÿÿÿÿH‹RMAJORZ
+CODE_SMELL
+j
+squid:S106V"9Replace this use of System.out or System.err by a logger.(ÙË¡öüÿÿÿÿHŒRMAJORZ
+CODE_SMELL
+e
+squid:S106R"9Replace this use of System.out or System.err by a logger.(Û‰Ã¡HRMAJORZ
+CODE_SMELL
+squid:CommentedOutCodeLineG"<This block of commented-out lines of code should be removed.(ìˆ‹ò8‡óÛ¤¾,HŽRMAJORZ
+CODE_SMELL
+„squid:CommentedOutCodeLineL"<This block of commented-out lines of code should be removed.(—€çøÿÿÿÿ8‡óÛ¤¾,HRMAJORZ
+CODE_SMELL
+Xsquid:S1148f"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿHRMINORZVULNERABILITY
