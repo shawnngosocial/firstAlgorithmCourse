@@ -15,7 +15,10 @@ public class ShawnFractionalKnapsack {
 
                 index++;
             } else {
-                value += capacity * divideKeep4Digits(values[index], weights[index]);
+                // value += capacity * divideKeep4Digits(values[index], weights[index]);
+                value += capacity * (((double) values[index])/ weights[index]);
+                capacity = 0;
+
                 return value;
             } 
         }
@@ -23,22 +26,92 @@ public class ShawnFractionalKnapsack {
         return value;
     }
 
+    private static double getOptimalValueNaive(int capacity, int[] values, int[] weights) {
+        double value = 0.0;
 
-    private static double divideKeep4Digits(int a, int b) {
-        double quotient = (double) a/b;
+        sortDescByValuePerUnitNaive(values, weights);
 
-        int factor = 10000;
-        long newQuotiant = Math.round(quotient*factor);
+        for (int i = 0; i < weights.length; i++) {
+            if (capacity >= weights[i]) {
+                capacity -= weights[i];
+                value += values[i];
+            } else {
+                value += capacity * (((double) values[i])/ weights[i]);
+                break;
+            }            
+        }
 
-        return (double) newQuotiant/factor;
+        return value;
+    }
+
+
+    private static int get_best_idx(ArrayList<Double> ratios) {
+        double best = 0;
+        int best_idx = 0;
+
+        for (int i = 0; i < ratios.size(); i++) {
+            if (ratios.get(i) > best) {
+                best = ratios.get(i);
+                best_idx = i;
+            }
+        }
+        return best_idx;
+    }
+    
+    private static double getOptimalValueDifferent(int capacity, int[] values, int[] weights) {
+        double value = 0;
+        //write your code here
+        ArrayList<Integer> valuelist = new ArrayList<Integer>();
+        for (int i : values) 
+            valuelist.add(i);
+        
+        ArrayList<Double> weightlist = new ArrayList<Double>();
+        for (double i : weights) 
+            weightlist.add(i);
+        
+        ArrayList<Double> ratios = new ArrayList<Double>();
+        for(int i=0;i<valuelist.size();i++) {
+          ratios.add((double)valuelist.get(i)/weightlist.get(i));
+        }
+        
+        while (capacity > 0) {
+            int best_idx = get_best_idx(ratios);
+            if (weightlist.get(best_idx) > 0) {
+
+                System.out.println(String.format("\nbest_idx weight: %f", weightlist.get(best_idx)));
+
+                double a = Math.min((double)capacity, (double)weightlist.get(best_idx));
+
+                System.out.println(String.format("\n a: %f", a));
+
+                double ratio = (double) valuelist.get(best_idx) / (double) weightlist.get(best_idx);                
+
+                System.out.println(String.format("\n ratio: %f", ratio));
+
+                value += a * ratio;
+
+                System.out.println(String.format("\n value: %f\n", value));
+
+
+                weightlist.set(best_idx, weightlist.get(best_idx) - a);
+                capacity -= a;
+            }
+            if (weightlist.get(best_idx) == 0) {
+                weightlist.remove(best_idx);
+                valuelist.remove(best_idx);
+                ratios.remove(best_idx);;
+            }
+        }
+        
+        return value;
     }
 
 
     private static void sortDescByValuePerUnitNaive(int[] values, int[] weights) {
         for (int i = 0; i < values.length; i++) {
             for (int j = i; j > 0; j--) {
-                double unitValueJ = values[j]/weights[j];
-                double unitValueJMinus = values[j-1]/weights[j-1];
+                double unitValueJ = (double) values[j]/weights[j];
+                double unitValueJMinus = (double) values[j-1]/weights[j-1];
 
                 if (unitValueJ > unitValueJMinus) {
                     int temp = values[j];
@@ -114,8 +187,8 @@ public class ShawnFractionalKnapsack {
         int i = 0, j = 0;
         int index = l;
         while (i < leftLength && j < rightLength) {
-            int unitValueLeft = leftValues[i]/leftWeights[i];
-            int unitValueRight = rightValues[j]/rightWeights[j];
+            double unitValueLeft = (double) leftValues[i]/leftWeights[i];
+            double unitValueRight = (double) rightValues[j]/rightWeights[j];
 
             if (unitValueLeft >= unitValueRight) {
                 values[index] = leftValues[i];
@@ -160,6 +233,55 @@ public class ShawnFractionalKnapsack {
         }
         System.out.println(getOptimalValue(capacity, values, weights));
     }
+
+    // stress test 
+    // public static void main(String args[]) {
+    //     Random ran = new Random();
+
+    //     while (true) {
+    //         int n = ran.nextInt(10) + 1;
+
+    //         int[] values = new int[n];
+    //         int[] weights = new int[n];
+
+    //         for (int i = 0; i < n; i++) {
+    //             values[i] = ran.nextInt(100) + 1;
+    //             weights[i] = ran.nextInt(100) + 1;
+    //         }
+
+
+    //         int[] valuesNaive = new int[n];
+    //         int[] weightsNaive = new int[n];
+
+    //         // copy array
+    //         valuesNaive = copyArray(values);
+    //         weightsNaive = copyArray(weights);
+
+    //         System.out.println(String.format("n: %d", n));
+
+    //         System.out.println("Before sorting............");
+    //         System.out.println(String.format("values: %s", Arrays.toString(values)));
+    //         System.out.println(String.format("weights: %s", Arrays.toString(weights)));
+    //         // System.out.println(String.format("valuesNaive: %s", Arrays.toString(valuesNaive)));
+    //         // System.out.println(String.format("weightsNaive: %s", Arrays.toString(weightsNaive)));
+
+    //         double optimalValue = getOptimalValue(n, values, weights);
+    //         double optimalValueNaive = getOptimalValueDifferent(n, valuesNaive, weightsNaive);
+
+    //         if (optimalValue == optimalValueNaive) {
+    //             System.out.println("Ok.\n"); 
+    //         } else {
+    //             System.out.println("Wrong!");
+    //             System.out.println(String.format("optimalValue: %f, naive: %f", optimalValue, optimalValueNaive));
+
+    //             System.out.println(String.format("values: %s", Arrays.toString(values)));
+    //             System.out.println(String.format("weights: %s", Arrays.toString(weights)));
+    //             // System.out.println(String.format("valuesNaive: %s", Arrays.toString(valuesNaive)));
+    //             // System.out.println(String.format("weightsNaive: %s", Arrays.toString(weightsNaive)));
+    //             break;
+    //         }
+    //     }
+    // }
 
 
     // main sorting

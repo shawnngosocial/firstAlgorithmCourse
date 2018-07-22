@@ -12,10 +12,22 @@ public class ShawnDotProduct {
 
         long revenue = 0;
         for (int i = 0; i < ad.length; i++) {
-            revenue += ad[i]*clicks[i];
+            revenue += (long) ad[i] * clicks[i];
         }
 
         return revenue;
+    }
+
+    private static long maxDotProductDifferent(int[] a, int[] b) {
+        //write your code here
+        long result = 0;
+        Arrays.sort(a); 
+        Arrays.sort(b);
+        
+        for (int i = 0; i < a.length; i++) {
+            result += (long)a[i] * b[i];
+        }
+        return result;
     }
 
 
@@ -27,11 +39,6 @@ public class ShawnDotProduct {
         if (clicks.length > 1) {
             sortDesc(clicks, 0, clicks.length - 1);
         }        
-
-        System.out.println("\nAfter sorting.....");
-        System.out.println(Arrays.toString(ad));
-        System.out.println(Arrays.toString(clicks));
-        System.out.println("\n");
     }
 
     private static void sortAdandClickNaive(int[] ad, int[] clicks) {
@@ -137,6 +144,68 @@ public class ShawnDotProduct {
 
         // sortAdandClick(a, b);
         // sortAdandClickNaive(a, b);
+    }
+
+
+    // public static void main(String[] args) {
+    //     Random ran = new Random();
+
+    //     while(true) {
+    //         int n = ran.nextInt(50) + 1;
+
+    //         int[] ad = new int[n];
+    //         int[] clicks = new int[n];
+
+    //         int[] adNaive = new int[n];
+    //         int[] clicksNaive = new int[n];
+
+    //         for (int i = 0; i < n; i++) {
+    //             ad[i] = ran.nextInt(1000) + 1;
+    //             clicks[i] = ran.nextInt(1000) + 1;
+    //         }
+
+    //         // copy array
+    //         adNaive = copyArray(ad);
+    //         clicksNaive = copyArray(clicks);
+
+    //         System.out.println(String.format("\nn: %d", n));
+
+    //         System.out.println("Before sorting............");
+    //         System.out.println(String.format("ad: %s", Arrays.toString(ad)));
+    //         System.out.println(String.format("clicks: %s", Arrays.toString(clicks)));
+
+    //         long max = maxDotProduct(ad, clicks);
+    //         long maxNaive = maxDotProductDifferent(ad, clicks);
+
+    //         if (max == maxNaive) {
+    //             System.out.println("\nOk\n");
+    //         } else {
+    //             System.out.println("\nWrong.\n");
+    //             System.out.println(String.format("max: %d, naive: %d", max, maxNaive));
+
+    //             System.out.println("\nmy own sorted");
+    //             System.out.println(String.format("ad: %s", Arrays.toString(ad)));
+    //             System.out.println(String.format("clicks: %s", Arrays.toString(clicks)));
+
+    //             System.out.println("\nDifferent sorted");
+    //             System.out.println(String.format("adNaive: %s", Arrays.toString(adNaive)));
+    //             System.out.println(String.format("clicksNaive: %s", Arrays.toString(clicksNaive)));
+
+    //             break;
+    //         }
+
+    //     }
+    // }
+
+
+    private static int[] copyArray(int[] arr) {
+        int[] newArr = new int[arr.length];
+
+        for (int i=0; i < arr.length; i++) {
+            newArr[i] = arr[i];
+        }
+
+        return newArr;        
     }
 }
 

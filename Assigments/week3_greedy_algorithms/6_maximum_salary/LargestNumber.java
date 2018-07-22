@@ -20,4 +20,3 @@ public class LargestNumber {
         System.out.println(largestNumber(a));
     }
 }
-
